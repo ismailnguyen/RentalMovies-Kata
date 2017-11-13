@@ -63,7 +63,7 @@ namespace RentalMovies_Kata.Tests
         }
 
         [Test]
-        public void Should_Print_Statement_For_Children_Movie_Rental()
+        public void Should_Print_Statement_For_Children_Movie_Rental_For_Less_Than_3_Days()
         {
             // GIVEN
             var customer = new Customer("toto");
@@ -78,6 +78,25 @@ namespace RentalMovies_Kata.Tests
             Check.That(statement).IsEqualTo("Rental Record for toto\n" +
                 "\tPokemon\t1.5\n" +
                 "Amount owed is 1.5\n" +
+                "You earned 1 frequent renter points");
+        }
+
+        [Test]
+        public void Should_Print_Statement_For_Children_Movie_Rental_For_More_Than_3_Days()
+        {
+            // GIVEN
+            var customer = new Customer("toto");
+            var movie = new Movie("Pokemon", Movie.Children);
+            var rental = new Rental(movie, 4);
+            customer.AddRental(rental);
+
+            // WHEN
+            var statement = customer.Statement();
+
+            // THEN
+            Check.That(statement).IsEqualTo("Rental Record for toto\n" +
+                "\tPokemon\t3\n" +
+                "Amount owed is 3\n" +
                 "You earned 1 frequent renter points");
         }
     }
