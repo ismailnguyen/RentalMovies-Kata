@@ -44,7 +44,7 @@ namespace RentalMovies_Kata.Tests
         }
 
         [Test]
-        public void Should_Print_Statement_For_NewRelease_Movie_Rental()
+        public void Should_Print_Statement_For_NewRelease_Movie_Rental_For_Less_Than_1_Day()
         {
             // GIVEN
             var customer = new Customer("toto");
@@ -60,6 +60,25 @@ namespace RentalMovies_Kata.Tests
                 "\tTransformers\t3\n" + 
                 "Amount owed is 3\n" + 
                 "You earned 1 frequent renter points");
+        }
+
+        [Test]
+        public void Should_Print_Statement_For_NewRelease_Movie_Rental_For_More_Than_1_Day()
+        {
+            // GIVEN
+            var customer = new Customer("toto");
+            var movie = new Movie("Transformers", Movie.NewRelease);
+            var rental = new Rental(movie, 2);
+            customer.AddRental(rental);
+
+            // WHEN
+            var statement = customer.Statement();
+
+            // THEN
+            Check.That(statement).IsEqualTo("Rental Record for toto\n" +
+                "\tTransformers\t6\n" +
+                "Amount owed is 6\n" +
+                "You earned 2 frequent renter points");
         }
 
         [Test]
